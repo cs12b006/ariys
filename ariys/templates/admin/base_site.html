@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% block sidebar %}
+    {{ block.super }}
+{% endblock %}
+
+{% block userlinks %}
+    {{ block.super }}
+    <li><a href="/graphql/" target="_blank">GraphQL</a></li>
+{% endblock %}

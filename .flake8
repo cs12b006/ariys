@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 100
+exclude = .git,__pycache__,migrations,node_modules,qa/,lambda_handler.py,.venv
+ignore = F401,F405,W503,E203
+; Excluded E203 because black and flake8 are in conflict over this. Eg:
+; chunks = [
+;     image_data[i : i + max_message_size] for i in range(0, image_len, max_message_size)
+; ]
