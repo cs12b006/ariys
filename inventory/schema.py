@@ -14,7 +14,7 @@ class Query(graphene.ObjectType):
     product = graphene.Field(ProductType, id=graphene.Int())
 
     def resolve_products(self, info, **kwargs):
-        return Product.objects.all()
+        return Product.objects.all().order_by('-ordered_quantity')
 
     def resolve_product(self, info, id):
         return Product.objects.get(pk=id)
