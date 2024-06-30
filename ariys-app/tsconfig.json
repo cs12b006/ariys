@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": [
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es6",
+    "sourceMap": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "extends": "expo/tsconfig.base"
+}
