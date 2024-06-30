@@ -32,7 +32,7 @@ class Customer(BaseModel):
 class PurchaseOrder(BaseModel):
     order_number = models.CharField(max_length=20, unique=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    products = models.ManyToManyField(Product, through='PurchaseOrderProduct')
+    products = models.ManyToManyField(Product, through="PurchaseOrderProduct")
 
     def __str__(self):
         return self.order_number
@@ -42,7 +42,9 @@ class PurchaseOrder(BaseModel):
             # Save to get the primary key
             super().save(*args, **kwargs)
             self.order_number = f"O{str(self.pk).zfill(5)}"
-        super().save(*args, **kwargs)
+            self.__class__.objects.filter(pk=self.pk).update(order_number=self.order_number)
+        else:
+            super().save(*args, **kwargs)
 
 
 class PurchaseOrderProduct(models.Model):
@@ -52,7 +54,7 @@ class PurchaseOrderProduct(models.Model):
     price = models.PositiveIntegerField()
 
     class Meta:
-        unique_together = ('purchase_order', 'product')
+        unique_together = ("purchase_order", "product")
 
     def __str__(self):
         return f"{self.purchase_order.order_number} - {self.product.name} - {self.quantity}"

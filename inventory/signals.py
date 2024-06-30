@@ -1,6 +1,8 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
+
 from .models import PurchaseOrderProduct
+
 
 @receiver(post_save, sender=PurchaseOrderProduct)
 def update_product_ordered_quantity_on_save(sender, instance, created, **kwargs):
@@ -13,6 +15,7 @@ def update_product_ordered_quantity_on_save(sender, instance, created, **kwargs)
         product.ordered_quantity -= previous_instance.quantity
         product.ordered_quantity += instance.quantity
     product.save()
+
 
 @receiver(post_delete, sender=PurchaseOrderProduct)
 def update_product_ordered_quantity_on_delete(sender, instance, **kwargs):

@@ -1,21 +1,12 @@
 import json
 
-from graphene_django.utils.testing import GraphQLTestCase
-
-from . import schema
-from .models import Product
+from inventory.models import Product
+from inventory.tests.base import BaseTest
 
 
-class ProductTestCase(GraphQLTestCase):
-    GRAPHENE_SCHEMA = schema.schema
-
+class ProductTestCase(BaseTest):
     def setUp(self):
-        self.product = Product.objects.create(
-            name="Test Product",
-            description="Test description",
-            price=10.99,
-            stock_quantity=100,
-        )
+        super().setUp()
 
     def test_query_all_mymodels(self):
         response = self.query(
@@ -45,12 +36,12 @@ class ProductTestCase(GraphQLTestCase):
                 }
             }
             """
-            % self.product.id
+            % self.product_jacket.id
         )
 
         self.assertResponseNoErrors(response)
         data = json.loads(response.content.decode("utf-8"))["data"]
-        self.assertEqual(data["product"]["name"], self.product.name)
-        self.assertEqual(data["product"]["description"], self.product.description)
-        self.assertEqual(float(data["product"]["price"]), float(self.product.price))
-        self.assertEqual(data["product"]["stockQuantity"], self.product.stock_quantity)
+        self.assertEqual(data["product"]["name"], self.product_jacket.name)
+        self.assertEqual(data["product"]["description"], self.product_jacket.description)
+        self.assertEqual(float(data["product"]["price"]), float(self.product_jacket.price))
+        self.assertEqual(data["product"]["stockQuantity"], self.product_jacket.stock_quantity)

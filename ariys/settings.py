@@ -32,9 +32,7 @@ if "*" in cors_origins:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOWED_ORIGINS = cors_origins
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip() for origin in env("CSRF_TRUSTED_ORIGINS").split(",")
-]
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in env("CSRF_TRUSTED_ORIGINS").split(",")]
 
 # Application definition
 
